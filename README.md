@@ -1,41 +1,43 @@
 # Flutter SDK Upgrade Skill
 
-检测并升级已有 Flutter 项目的 SDK 版本，同时迁移 Android 和 iOS 原生工程配置。
+[English](README.md) | [简体中文](README.zh-CN.md)
 
-## 安装
+Detect and upgrade the Flutter SDK in existing projects while migrating Android and iOS host configuration.
+
+## Install
 
 ```bash
 npx skills add and2long/flutter_upgrade_skill --skill upgrade-flutter-sdk -g
 ```
 
-去掉 `-g` 可安装到当前项目。仓库发布到 GitHub 后即可使用上述命令。
+Remove `-g` to install the skill in the current project instead.
 
-## 使用
+## Use
 
-在 Flutter 项目中调用：
+Invoke the skill from a Flutter project:
 
 ```text
-使用 $upgrade-flutter-sdk 将当前项目升级到 Flutter 3.38.10。
+Use $upgrade-flutter-sdk to upgrade this project to Flutter 3.38.10.
 ```
 
-Skill 会检测项目当前使用的 Flutter 版本，按顺序执行跨版本的 Android/iOS 配置迁移，并运行环境支持的分析、测试和构建验证。
+The skill detects the current Flutter version, applies crossed Android/iOS migrations in order, and runs the validation supported by the environment.
 
-## 主要能力
+## Features
 
-- 从 asdf、FVM、`pubspec.yaml`、VS Code 和 CI 配置检测 Flutter 版本。
-- 只按 `major.minor` 选择迁移规则；例如 `3.35.1 → 3.35.7` 不重复执行平台迁移。
-- 升级 Android 的 Gradle、AGP、Kotlin、Java 等构建配置。
-- 升级 iOS deployment target、Xcode scheme 和生命周期配置。
-- 保留签名、Flavor、Bundle ID、Podfile hook 和 ProGuard 等项目定制。
-- 检测版本来源冲突并阻止非预期降级。
+- Detect Flutter versions from asdf, FVM, `pubspec.yaml`, VS Code, and CI configuration.
+- Select migrations by `major.minor`; for example, `3.35.1 → 3.35.7` does not repeat platform migrations.
+- Upgrade Android Gradle, AGP, Kotlin, Java, and related build configuration.
+- Upgrade iOS deployment targets, Xcode schemes, and lifecycle configuration.
+- Preserve signing, flavors, bundle IDs, Podfile hooks, ProGuard rules, and other project customizations.
+- Detect conflicting version sources and prevent accidental downgrades.
 
-当前规则覆盖 Flutter `3.29`、`3.32`、`3.35` 和 `3.38`。未收录的版本会参考 Flutter 官方迁移说明并比较临时生成的 Android/iOS 模板。
+The catalog currently covers Flutter `3.29`, `3.32`, `3.35`, and `3.38`. For uncataloged versions, the skill consults official Flutter migration guidance and compares disposable Android/iOS templates.
 
-仅适配 Android 和 iOS，不处理 Web、macOS、Windows 和 Linux。
+Only Android and iOS are supported. Web, macOS, Windows, and Linux are out of scope.
 
-## 独立检测
+## Inspect only
 
-只查看迁移计划、不修改项目：
+Preview the migration plan without modifying the project:
 
 ```bash
 python3 /path/to/upgrade-flutter-sdk/scripts/inspect_flutter_project.py \
@@ -43,4 +45,4 @@ python3 /path/to/upgrade-flutter-sdk/scripts/inspect_flutter_project.py \
   --target 3.38.10
 ```
 
-添加 `--json` 可输出机器可读结果。详细规则见 [`migration-rules.md`](upgrade-flutter-sdk/references/migration-rules.md)。
+Add `--json` for machine-readable output. See [`migration-rules.md`](upgrade-flutter-sdk/references/migration-rules.md) for details.
