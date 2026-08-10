@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "levels": [
+    {
+      "version": "3.29",
+      "title": "Flutter 3.29 host migration",
+      "summary": [
+        "Android removes v1 embedding Java APIs; migrate any app or local plugin still using PluginRegistry.Registrar or old embedding classes.",
+        "The 3.29.3 template uses Gradle 8.10.2, AGP 8.7.0, Kotlin 1.8.22, Kotlin DSL, and Java/JVM target 11; use these as comparison baselines, not forced values.",
+        "The tcm-app upgrade added android/app/.cxx to android/.gitignore and enabled GPU validation in the iOS Run scheme.",
+        "Flutter 3.29.3 bundles Dart 3.7.2; ensure pubspec's Dart constraint admits the bundled Dart version."
+      ]
+    },
+    {
+      "version": "3.32",
+      "title": "Flutter 3.32 generated plugin metadata migration",
+      "summary": [
+        ".flutter-plugins-dependencies replaces .flutter-plugins; update custom scripts or legacy settings.gradle logic that parses .flutter-plugins.",
+        "Do not commit generated plugin metadata files; regenerate them with flutter pub get/build."
+      ]
+    },
+    {
+      "version": "3.35",
+      "title": "Flutter 3.35 Android ABI and iOS baseline migration",
+      "summary": [
+        "Raise the iOS deployment target to 13.0 consistently in AppFrameworkInfo.plist, all IPHONEOS_DEPLOYMENT_TARGET entries, and the Podfile platform when present.",
+        "Add $(SRCROOT)/Flutter/ephemeral/flutter_lldbinit to TestAction and LaunchAction in the shared Runner scheme when missing.",
+        "Flutter now sets default Android abiFilters for non-debuggable builds; inspect custom ABI filters in defaultConfig, buildTypes, and productFlavors and migrate intentionally.",
+        "Flutter 3.35.7 bundles Dart 3.9.x; ensure pubspec's Dart constraint admits the selected patch release."
+      ]
+    },
+    {
+      "version": "3.38",
+      "title": "Flutter 3.38 Android toolchain and iOS UIScene readiness",
+      "summary": [
+        "Use Java 17 or newer supported by the selected Gradle version; the 3.38.10 template targets Java/JVM 17.",
+        "The 3.38.10 template baseline is Gradle 8.14, AGP 8.11.1, and Kotlin 2.2.20. Upgrade the trio together after checking project plugins.",
+        "Remove android.enableJetifier=true only after verifying all dependencies are AndroidX-native.",
+        "Flutter 3.38 provides UIScene lifecycle migration APIs. Inspect customized AppDelegate and plugin lifecycle logic before adopting FlutterSceneDelegate; 3.41 makes app migration the default.",
+        "Flutter 3.38.10 bundles Dart 3.10.9; ensure pubspec's Dart constraint admits the bundled Dart version.",
+        "Update .metadata revision fields only through Flutter's own migration behavior; do not fabricate revision hashes."
+      ]
+    }
+  ]
+}

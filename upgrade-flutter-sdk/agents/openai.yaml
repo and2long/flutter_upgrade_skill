@@ -1,0 +1,4 @@
+interface:
+  display_name: "Upgrade Flutter SDK"
+  short_description: "Upgrade existing Flutter Android and iOS projects safely"
+  default_prompt: "Use $upgrade-flutter-sdk to inspect this project and upgrade its Flutter SDK and Android/iOS configuration."
