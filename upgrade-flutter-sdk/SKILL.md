@@ -69,6 +69,6 @@ Review `git diff --check` and the final diff. Report detected and target version
 - Do not run `flutter create .` over the existing project.
 - Do not rewrite Groovy files to Kotlin DSL solely because a newer template uses `.kts`; do so only when explicitly requested or when a validated compatibility need justifies the larger change.
 - Keep Gradle, AGP, Kotlin, Java, compile SDK, and plugins mutually compatible. Template values are baselines, not universal mandates.
-- Raise iOS deployment targets consistently in the Podfile (if present), `AppFrameworkInfo.plist`, and every relevant Xcode build configuration.
+- Raise iOS deployment targets consistently in the Podfile (if present) and every relevant Xcode build configuration. Before 3.41, also align `AppFrameworkInfo.plist`; for 3.41+, remove its static `MinimumOSVersion` and let Flutter set the built framework value dynamically.
 - Inspect custom AppDelegate code before UIScene migration; UI lifecycle logic may need a semantic move rather than a textual edit.
 - Restrict modifications to root SDK pins, dependency constraints required for the upgrade, `android/`, and `ios/`.

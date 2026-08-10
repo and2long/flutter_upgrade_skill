@@ -40,6 +40,26 @@
         "Flutter 3.38.10 bundles Dart 3.10.9; ensure pubspec's Dart constraint admits the bundled Dart version.",
         "Update .metadata revision fields only through Flutter's own migration behavior; do not fabricate revision hashes."
       ]
+    },
+    {
+      "version": "3.41",
+      "title": "Flutter 3.41 iOS UIScene default migration",
+      "summary": [
+        "UIScene is now the default for iOS apps. Let Flutter auto-migrate an uncustomized AppDelegate; otherwise migrate AppDelegate, scene configuration, Info.plist, and the Xcode project manually while preserving lifecycle logic. Add a custom SceneDelegate class only when needed.",
+        "Remove the static MinimumOSVersion entry from ios/Flutter/AppFrameworkInfo.plist; Flutter now derives it from the active iOS deployment target during the build.",
+        "The 3.41.9 Android template keeps the 3.38 toolchain baseline: Gradle 8.14, AGP 8.11.1, Kotlin 2.2.20, and Java 17.",
+        "Flutter 3.41.9 bundles Dart 3.11.5; ensure pubspec's Dart constraint admits the selected patch release."
+      ]
+    },
+    {
+      "version": "3.44",
+      "title": "Flutter 3.44 AGP 9 compatibility and iOS SwiftPM migration",
+      "summary": [
+        "The 3.44.0 Android template uses Gradle 9.1.0, AGP 9.0.1, Kotlin 2.3.20, and Java 17. Treat these as a coordinated baseline and audit every Android plugin before adopting AGP 9.",
+        "For AGP 9, add android.newDsl=false and android.builtInKotlin=false compatibility flags, remove the kotlin-android application, and move JVM target configuration to kotlin.compilerOptions. Do not enable built-in Kotlin on Flutter 3.44.",
+        "Swift Package Manager is now enabled by default for iOS. Let Flutter auto-add FlutterGeneratedPluginSwiftPackage and the scheme prepare pre-action, preserving CocoaPods fallback for plugins that still require it.",
+        "Flutter 3.44.0 bundles Dart 3.12.0; ensure pubspec's Dart constraint admits the selected patch release."
+      ]
     }
   ]
 }

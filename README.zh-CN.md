@@ -17,7 +17,7 @@ npx skills add and2long/flutter_upgrade_skill --skill upgrade-flutter-sdk -g
 在 Flutter 项目中调用：
 
 ```text
-使用 $upgrade-flutter-sdk 将当前项目升级到 Flutter 3.38.10。
+使用 $upgrade-flutter-sdk 将当前项目升级到 Flutter 3.44.0。
 ```
 
 Skill 会检测当前 Flutter 版本，按顺序执行跨版本的 Android/iOS 配置迁移，并运行环境支持的验证。
@@ -31,7 +31,7 @@ Skill 会检测当前 Flutter 版本，按顺序执行跨版本的 Android/iOS �
 - 保留签名、Flavor、Bundle ID、Podfile hook 和 ProGuard 等项目定制。
 - 检测版本来源冲突并阻止非预期降级。
 
-当前规则覆盖 Flutter `3.29`、`3.32`、`3.35` 和 `3.38`。未收录的版本会参考 Flutter 官方迁移说明并比较临时生成的 Android/iOS 模板。
+当前规则覆盖 Flutter `3.29`、`3.32`、`3.35`、`3.38`、`3.41` 和 `3.44`。未收录的版本会参考 Flutter 官方迁移说明并比较临时生成的 Android/iOS 模板。
 
 仅适配 Android 和 iOS，不处理 Web、macOS、Windows 和 Linux。
 
@@ -42,7 +42,7 @@ Skill 会检测当前 Flutter 版本，按顺序执行跨版本的 Android/iOS �
 ```bash
 python3 /path/to/upgrade-flutter-sdk/scripts/inspect_flutter_project.py \
   /path/to/flutter-project \
-  --target 3.38.10
+  --target 3.44.0
 ```
 
 添加 `--json` 可输出机器可读结果。详细规则见 [`migration-rules.md`](upgrade-flutter-sdk/references/migration-rules.md)。

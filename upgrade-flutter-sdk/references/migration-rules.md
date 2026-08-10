@@ -2,6 +2,16 @@
 
 Use this catalog after the inspector selects the levels crossed by the requested upgrade. Conditions matter: not every item requires a file change.
 
+## Contents
+
+- [3.29](#329)
+- [3.32](#332)
+- [3.35](#335)
+- [3.38](#338)
+- [3.41](#341)
+- [3.44](#344)
+- [Uncataloged target levels](#uncataloged-target-levels)
+
 ## 3.29
 
 ### Android
@@ -82,6 +92,63 @@ Use this catalog after the inspector selects the levels crossed by the requested
 
 - Ensure the Dart constraint accepts the target patch's bundled Dart SDK (3.38.10 bundles Dart 3.10.9).
 - Let Flutter update `.metadata` revision hashes. Do not paste the example project's revision unless it exactly matches the installed SDK.
+
+## 3.41
+
+### Android
+
+- The clean Flutter 3.41.9 template keeps the 3.38 baseline: Gradle 8.14, AGP 8.11.1, Kotlin 2.2.20, and Java/JVM 17. Do not churn Android files when the existing compatible toolchain already matches.
+
+### iOS
+
+- Run an iOS build/run with the target Flutter SDK and inspect its migration output. Flutter 3.41 automatically migrates eligible apps whose `AppDelegate` is not customized.
+- If automatic migration is skipped, migrate UIScene manually and semantically:
+  - Add `UIApplicationSceneManifest` to `ios/Runner/Info.plist`, disable multiple scenes unless the app intentionally supports them, and use `FlutterSceneDelegate` directly when no custom scene behavior is needed.
+  - Only when the app needs scene-specific lifecycle logic, add `ios/Runner/SceneDelegate.swift` subclassing `FlutterSceneDelegate` (or the Objective-C equivalent), add it to the Runner target, and point `UISceneDelegateClassName` at that project class.
+  - Make `AppDelegate` conform to `FlutterImplicitEngineDelegate`. Move generated plugin registration and any method-channel/platform-view initialization to `didInitializeImplicitFlutterEngine`.
+  - Move UI-state callbacks and window/view-controller access from application lifecycle methods to scene lifecycle methods. Preserve deep-link, notification, restoration, and plugin forwarding behavior.
+- Remove `MinimumOSVersion` from `ios/Flutter/AppFrameworkInfo.plist`. Starting in this line, Flutter writes the built App.framework value dynamically from the active deployment target, preventing the source plist from becoming stale.
+- Keep the actual iOS deployment target at 13 or higher in Xcode build settings and the Podfile when present.
+- Do not suppress UIScene migration warnings merely to make validation green. If migration must be deferred, document why and use the project opt-out only as a temporary, explicit decision.
+
+### Root
+
+- Ensure the Dart constraint accepts the target patch's bundled Dart SDK (3.41.9 bundles Dart 3.11.5).
+- Let Flutter update `.metadata`; do not paste the clean template's revision hash.
+
+## 3.44
+
+### Android
+
+- Decide explicitly whether to adopt the Flutter 3.44 Android template baseline. Flutter 3.44.0 creates projects with:
+  - Gradle wrapper `9.1.0`
+  - Android Gradle Plugin `9.0.1`
+  - Kotlin Gradle Plugin `2.3.20`
+  - Java/JVM target 17
+- Before adopting AGP 9, audit application and local/plugin Gradle scripts for deprecated or removed AGP APIs, old DSL types, duplicate package/namespace values, custom variants, KSP, Google/Firebase plugins, and code-quality plugins. Upgrade the compatible toolchain as one set.
+- When moving the application to the 3.44 AGP 9 compatibility layout:
+  - Add `android.newDsl=false` and `android.builtInKotlin=false` to `android/gradle.properties`. Flutter 3.44 deliberately keeps the legacy behavior active while migrations land.
+  - Remove `kotlin-android`/`org.jetbrains.kotlin.android` from the application module's applied plugins.
+  - Remove `android.kotlinOptions` and configure the JVM target with `kotlin { compilerOptions { jvmTarget = JvmTarget.JVM_17 } }`.
+  - Keep the Kotlin plugin declaration in settings when required by plugins/tooling, matching the target template and compatibility needs.
+- Do not set `android.builtInKotlin=true` for Flutter 3.44. Official app guidance requires Flutter 3.47 or later before enabling it. Do not remove the compatibility flags until the app and every local/external plugin are migrated and the selected Flutter version supports enabling the new behavior.
+- If retaining AGP 8 temporarily, keep its compatible Gradle/Kotlin layout and record the deferral; do not partially apply the AGP 9 syntax/flags.
+
+### iOS
+
+- Flutter 3.44 enables Swift Package Manager by default and automatically migrates existing apps when they are run/built.
+- After automatic migration, verify every relevant Xcode scheme and target:
+  - `Runner.xcodeproj/project.pbxproj` references the local generated package at `Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage` and links its product to the Runner target.
+  - Each build scheme has a `Run Prepare Flutter Framework Script` pre-action invoking `"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh" prepare` with Runner build settings.
+  - Generated SwiftPM files under `ios/Flutter/ephemeral` remain untracked.
+- Preserve CocoaPods configuration and run `pod install` when any plugin still lacks SwiftPM support; Flutter falls back to CocoaPods. Do not delete `Podfile`/`Podfile.lock` solely because SwiftPM is enabled.
+- Check for duplicate native dependencies supplied by both CocoaPods and SwiftPM. Resolve conflicts before changing either dependency manager globally.
+- If the project intentionally opts out, document the reason and set the project-level Flutter SwiftPM configuration explicitly instead of deleting auto-generated Xcode entries repeatedly.
+
+### Root
+
+- Ensure the Dart constraint accepts the target patch's bundled Dart SDK (3.44.0 bundles Dart 3.12.0).
+- Regenerate dependency metadata with the target SDK; review `pubspec.lock` changes without bulk-upgrading unrelated direct packages.
 
 ## Uncataloged target levels
 

@@ -17,7 +17,7 @@ Remove `-g` to install the skill in the current project instead.
 Invoke the skill from a Flutter project:
 
 ```text
-Use $upgrade-flutter-sdk to upgrade this project to Flutter 3.38.10.
+Use $upgrade-flutter-sdk to upgrade this project to Flutter 3.44.0.
 ```
 
 The skill detects the current Flutter version, applies crossed Android/iOS migrations in order, and runs the validation supported by the environment.
@@ -31,7 +31,7 @@ The skill detects the current Flutter version, applies crossed Android/iOS migra
 - Preserve signing, flavors, bundle IDs, Podfile hooks, ProGuard rules, and other project customizations.
 - Detect conflicting version sources and prevent accidental downgrades.
 
-The catalog currently covers Flutter `3.29`, `3.32`, `3.35`, and `3.38`. For uncataloged versions, the skill consults official Flutter migration guidance and compares disposable Android/iOS templates.
+The catalog currently covers Flutter `3.29`, `3.32`, `3.35`, `3.38`, `3.41`, and `3.44`. For uncataloged versions, the skill consults official Flutter migration guidance and compares disposable Android/iOS templates.
 
 Only Android and iOS are supported. Web, macOS, Windows, and Linux are out of scope.
 
@@ -42,7 +42,7 @@ Preview the migration plan without modifying the project:
 ```bash
 python3 /path/to/upgrade-flutter-sdk/scripts/inspect_flutter_project.py \
   /path/to/flutter-project \
-  --target 3.38.10
+  --target 3.44.0
 ```
 
 Add `--json` for machine-readable output. See [`migration-rules.md`](upgrade-flutter-sdk/references/migration-rules.md) for details.
